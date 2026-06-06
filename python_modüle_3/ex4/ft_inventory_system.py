@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 import sys
+from typing import Dict
 
 
-def inventory_system():
+def inventory_system() -> None:
     args = sys.argv[1:]
-    new_item = {}
+    new_item: Dict[str, int] = {}
 
     print("=== Inventory System Analysis ===")
     for arg in args:
@@ -18,7 +19,7 @@ def inventory_system():
             continue
 
         try:
-            value = int(value)
+            quantity_int = int(value)
         except ValueError as e:
             print(f"Quantity error for '{key}':", e)
             continue
@@ -27,7 +28,7 @@ def inventory_system():
             print(f"Redundant item '{key}' - discarding")
             continue
         else:
-            new_item[key] = value
+            new_item[key] = quantity_int
 
     total_value = sum(new_item.values())
     print("Got inventory: ", new_item)
@@ -42,7 +43,8 @@ def inventory_system():
         if item_value > max_value:
             max_value = item_value
 
-    min_value = 99999
+    min_value = 9999
+    least_abundant_item = None
     for item in new_item.keys():
         quantity = new_item[item]
         if quantity < min_value:
@@ -51,7 +53,7 @@ def inventory_system():
 
     print(f"Item most abundant: potion with quantity {max_value}")
     print(f"Item least abundant: {least_abundant_item}"
-          f" with quantity {quantity}")
+          f" with quantity {min_value}")
 
     new_item.update({'magic_item': 1})
     print("Updated inventory: ", new_item)

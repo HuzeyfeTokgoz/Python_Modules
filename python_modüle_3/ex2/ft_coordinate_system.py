@@ -2,20 +2,20 @@
 import math
 
 
-def coordinate():
+def coordinate() -> tuple[float, float, float]:
     while True:
         new_coordinate = input("Enter new coordinates as "
-                                "floats in format 'x,y,z': ")
+                               "floats in format 'x,y,z': ")
         value = new_coordinate.split(",")
 
         if len(value) != 3:
             print("Invalid syntax")
             continue
         try:
-            coor_tuple = ()
+            coor_tuple: tuple[float, float, float] = (0.0, 0.0, 0.0)
             for i in value:
-                coor_tuple = coor_tuple + (float(i),)
-            return coor_tuple
+                new_coor_tuple = coor_tuple + (float(i),)
+            return (new_coor_tuple[0], new_coor_tuple[1], new_coor_tuple[2])
         except ValueError as e:
             print(f"Error on parameter '{i}': {e}")
 

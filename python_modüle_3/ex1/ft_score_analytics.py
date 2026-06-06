@@ -2,7 +2,7 @@
 import sys
 
 
-def new_list(argv) -> list:
+def new_list(argv: list[str]) -> list[int]:
     i = 0
     score = []
     while i < len(argv):
@@ -16,7 +16,7 @@ def new_list(argv) -> list:
 
 def score_analytics() -> None:
     print("=== Player Score Analytics ===")
-    lst = new_list(sys.argv[1:])
+    lst: list[int] = new_list(sys.argv[1:])
 
     if len(lst) == 0:
         print("No scores provided. Usage: python3 ft_score_analytics.py"
