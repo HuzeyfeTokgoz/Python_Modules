@@ -1,11 +1,12 @@
 import typing
 from abc import ABC, abstractmethod
 
+
 class DataProcessor(ABC):
 	def __init__(self) -> None:
 		self.storage: list[tuple[int, str]] = []
 		self.number: int = 0
-	
+
 	@abstractmethod
 	def validate(self, data: typing.Any) -> bool:
 		pass
@@ -32,7 +33,7 @@ class NumericProcessor(DataProcessor):
 					return False
 			return True
 		return False
-	
+
 	def ingest(self, data: int | float | list[int | float]) -> None:
 		if not self.validate(data):
 			raise ValueError("Improper numeric data")
@@ -40,11 +41,10 @@ class NumericProcessor(DataProcessor):
 			for x in data:
 				self.storage.append((self.number, str(x)))
 				self.number += 1
-				
+
 		elif type(data) in (int, float):
 				self.storage.append((self.number, str(data)))
 				self.number += 1
-				
 
 
 class TextProcessor(DataProcessor):
@@ -65,11 +65,10 @@ class TextProcessor(DataProcessor):
 			for x in data:
 				self.storage.append((self.number, x))
 				self.number += 1
-				
+
 		elif type(data) is str:
 			self.storage.append((self.number, data))
 			self.number += 1
-			
 
 
 class LogProcessor(DataProcessor):
@@ -94,7 +93,7 @@ class LogProcessor(DataProcessor):
 				):
 					return True
 		return False
-	
+
 	def ingest(self, data: dict[str, str] | list[dict[str, str]]):
 		if not self.validate(data):
 			raise ValueError("Improper log data")
@@ -105,7 +104,6 @@ class LogProcessor(DataProcessor):
 				formatted_log = f"{key}: {value}"
 				self.storage.append((self.number, formatted_log))
 				self.number += 1
-				
 
 		elif type(data) is dict:
 			key = data['log_level'] 
@@ -113,7 +111,7 @@ class LogProcessor(DataProcessor):
 			formatted_log = f"{key}: {value}"
 			self.storage.append((self.number, formatted_log))
 			self.number += 1
-			
+
 
 class DataStream:
 	def __init__(self) -> None:
@@ -179,7 +177,7 @@ if __name__ == "__main__":
 
 	print("== DataStream statistics ==")
 	data_stream.print_processors_stats()
-	
+
 	print("\nConsume some elements from the data processors: Numeric 3, Text 2, Log 1")
 	for _ in 0, 1, 2: numeric.output()
 	for _ in 0, 1: text.output()
