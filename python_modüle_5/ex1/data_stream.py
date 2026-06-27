@@ -133,8 +133,8 @@ class DataStream:
                     break
 
             if not flg:
-                print(f"DataStream error - \
-                      Can't process element in stream: {element}")
+                print("DataStream error - "
+                      f"Can't process element in stream: {element}")
 
     def print_processors_stats(self) -> None:
         if not self.processors:
@@ -143,8 +143,8 @@ class DataStream:
 
         for proc in self.processors:
             name = proc.__class__.__name__.replace("Processor", " Processor")
-            print(f"{name}: total {proc.number} items processed, \
-                  remaining {len(proc.storage)} on processor")
+            print(f"{name}: total {proc.number} items processed, "
+                  f"remaining {len(proc.storage)} on processor")
 
 
 if __name__ == "__main__":
@@ -189,8 +189,8 @@ if __name__ == "__main__":
     print("== DataStream statistics ==")
     data_stream.print_processors_stats()
 
-    print("\nConsume some elements from the data \
-          processors: Numeric 3, Text 2, Log 1")
+    print("\nConsume some elements from the data "
+          "processors: Numeric 3, Text 2, Log 1")
 
     for _ in 0, 1, 2:
         numeric.output()

@@ -117,11 +117,6 @@ class LogProcessor(DataProcessor):
             self.number += 1
 
 
-class ExportPlugin(typing.Protocol):
-    def process_output(self, data: list[tuple[int, str]]) -> None:
-        pass
-
-
 class DataStream:
     def __init__(self) -> None:
         self.processors: list[DataProcessor] = []
@@ -149,8 +144,8 @@ class DataStream:
 
         for proc in self.processors:
             name = proc.__class__.__name__.replace("Processor", " Processor")
-            print(f"{name}: total {proc.number} items processed, \
-                  remaining {len(proc.storage)} on processor")
+            print(f"{name}: total {proc.number} items processed, "
+                  f"remaining {len(proc.storage)} on processor")
 
     def output_pipeline(self, nb: int, plugin: ExportPlugin) -> None:
         for proc in self.processors:
@@ -164,6 +159,11 @@ class DataStream:
 
             if data:
                 plugin.process_output(data)
+
+
+class ExportPlugin(typing.Protocol):
+    def process_output(self, data: list[tuple[int, str]]) -> None:
+        pass
 
 
 class CSVPlugin(ExportPlugin):

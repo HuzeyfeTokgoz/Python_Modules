@@ -130,8 +130,8 @@ if __name__ == "__main__":
     print(f"Trying to validate input '{test}': {numeric.validate(test)}")
 
     test = "foo"
-    print(f"Test invalid ingestion of string '{test}' \
-          without prior validation:")
+    print(f"Test invalid ingestion of string '{test}' "
+          "without prior validation:")
     try:
         numeric.ingest(test)
     except Exception as e:
