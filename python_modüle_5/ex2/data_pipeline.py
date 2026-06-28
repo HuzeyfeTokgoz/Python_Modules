@@ -9,11 +9,11 @@ class DataProcessor(ABC):
 
     @abstractmethod
     def validate(self, data: typing.Any) -> bool:
-        pass
+        ...
 
     @abstractmethod
     def ingest(self, data: typing.Any) -> None:
-        pass
+        ...
 
     def output(self) -> tuple[int, str]:
         if not self.storage:
@@ -117,6 +117,11 @@ class LogProcessor(DataProcessor):
             self.number += 1
 
 
+class ExportPlugin(typing.Protocol):
+    def process_output(self, data: list[tuple[int, str]]) -> None:
+        ...
+
+
 class DataStream:
     def __init__(self) -> None:
         self.processors: list[DataProcessor] = []
@@ -161,12 +166,7 @@ class DataStream:
                 plugin.process_output(data)
 
 
-class ExportPlugin(typing.Protocol):
-    def process_output(self, data: list[tuple[int, str]]) -> None:
-        pass
-
-
-class CSVPlugin(ExportPlugin):
+class CSVPlugin:
     def process_output(self, data: list[tuple[int, str]]) -> None:
         if not data:
             return
@@ -179,7 +179,7 @@ class CSVPlugin(ExportPlugin):
         print(",".join(csv_line))
 
 
-class JSONPlugin(ExportPlugin):
+class JSONPlugin:
     def process_output(self, data: list[tuple[int, str]]) -> None:
         if not data:
             return

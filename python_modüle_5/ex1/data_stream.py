@@ -9,11 +9,11 @@ class DataProcessor(ABC):
 
     @abstractmethod
     def validate(self, data: typing.Any) -> bool:
-        pass
+        ...
 
     @abstractmethod
     def ingest(self, data: typing.Any) -> None:
-        pass
+        ...
 
     def output(self) -> tuple[int, str]:
         if not self.storage:
