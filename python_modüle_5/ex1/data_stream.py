@@ -149,10 +149,10 @@ class DataStream:
 
 if __name__ == "__main__":
     print("=== Code Nexus - Data Pipeline ===")
-    print("Initialize Data Stream...")
+    print("\nInitialize Data Stream...")
     data_stream = DataStream()
 
-    print("\n== DataStream statistics ==")
+    print("== DataStream statistics ==")
     data_stream.print_processors_stats()
     test_data = [
                 'Hello world',

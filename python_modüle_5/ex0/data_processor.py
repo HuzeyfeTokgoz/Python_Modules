@@ -146,18 +146,17 @@ if __name__ == "__main__":
         value, data = numeric.output()
         print(f"Numeric value {value}: {data}")
 
-    print("\nTesting Numeric Processor...")
+    print("\nTesting Text Processor...")
     text = TextProcessor()
     test = 42
     print(f"Trying to validate input '{test}': {text.validate(test)}")
     test_str_list: list[str] = ["Hello", "Nexus", "World"]
     print(f"Processing data: {test_str_list}")
 
-    print("Extracting 3 values...")
+    print("Extracting 1 value...")
     text.ingest(test_str_list)
-    for _ in 0, 1, 2:
-        value, data = text.output()
-        print(f"Numeric value {value}: {data}")
+    value, data = text.output()
+    print(f"Text value {value}: {data}")
 
     print("\nTesting Log Processor...")
     log = LogProcessor()
