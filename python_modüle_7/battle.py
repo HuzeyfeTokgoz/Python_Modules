@@ -21,7 +21,7 @@ def test_battle(factory1: CreatureFactory, factory2: CreatureFactory) -> None:
     warrior2 = factory2.create_base()
 
     print(warrior1.describe())
-    print(" VS.")
+    print(" vs.")
     print(warrior2.describe())
     print(" fight!")
 

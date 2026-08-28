@@ -1,8 +1,11 @@
+from typing import Any
 from ex0 import FlameFactory, AquaFactory
 from ex1 import HealingCreatureFactory, TransformCreatureFactory
-from ex2 import NormalStrategy, AggressiveStrategy, DefensiveStrategy, InvalidStrategyError
+from ex2 import NormalStrategy, AggressiveStrategy, \
+    DefensiveStrategy, InvalidStrategyError
 
-def tournament(opponents: list[tuple]):
+
+def tournament(opponents: list[tuple[Any, Any]]) -> None:
     print("*** Tournament ***")
     print(f"{len(opponents)} opponents involved")
 
@@ -16,9 +19,9 @@ def tournament(opponents: list[tuple]):
 
             print("\n* Battle *")
             print(warrior1.describe())
-            print("VS.")
+            print(" vs.")
             print(warrior2.describe())
-            print("now fight!")
+            print(" now fight!")
 
             try:
                 strategy1.act(warrior1)
@@ -38,14 +41,13 @@ if __name__ == "__main__":
     aggressive_strat = AggressiveStrategy()
     defensive_strat = DefensiveStrategy()
 
-
     print("Tournament (basic)")
     print("[(Flameling+Normal), (Healing+Defensive)]")
     tournament([
         (flame_factory, normal_strat),
         (heal_factory, defensive_strat)
     ])
-    
+
     print("\n----------------------------------\n")
 
     print("Tournament 1 (error)")
