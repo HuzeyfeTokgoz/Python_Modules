@@ -74,7 +74,7 @@ if __name__ == "__main__":
 
     print("Alien Contact Log Validation\n")
     print("======================================")
-    for i in range(3):
+    for i in range(len(data)):
         if not data:
             break
         try:

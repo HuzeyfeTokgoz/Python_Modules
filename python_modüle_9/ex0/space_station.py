@@ -61,7 +61,7 @@ if __name__ == "__main__":
     data = json_plugin() or csv_plugin()
     print("Space Station Data Validation")
     print("=======================================")
-    for i in range(3):
+    for i in range(len(data)):
         if not data:
             break
         print("Valid station created:")
