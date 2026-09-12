@@ -26,7 +26,7 @@ class CrewMember(BaseModel):
 
 class SpaceMission(BaseModel):
     mission_id: str = Field(min_length=5, max_length=15)
-    mission_name: str = Field(min_length=5, max_length=100)
+    mission_name: str = Field(min_length=3, max_length=100)
     destination: str = Field(min_length=3, max_length=50)
     launch_date: datetime
     duration_days: int = Field(ge=1, le=3650)
@@ -39,20 +39,23 @@ class SpaceMission(BaseModel):
         if not self.mission_id.startswith('M'):
             raise ValueError("Mission ID must start with 'M'")
 
-        rank_error: bool = False
-        years_error: bool = False
+        leader: bool = False
+        experienced: int = 0
         for member in self.crew:
             if member.rank in [RankEnum.captain, RankEnum.commander]:
-                rank_error = True
-            if not member.years_experience >= 5:
-                years_error = True
+                leader = True
 
-        if not rank_error:
+        if not leader:
             raise ValueError("Must have at least one Commander or Captain")
 
-        if self.duration_days > 365 and years_error:
-            raise ValueError("Long missions (> 365 days) "
-                             "need 50% experienced crew (5+ years)")
+        if self.duration_days > 365:
+            for member in self.crew:
+                if member.years_experience >= 5:
+                    experienced += 1
+
+            if experienced < len(self.crew) / 2:
+                raise ValueError("Long missions (> 365 days) "
+                                "need 50% experienced crew (5+ years)")
 
         for member in self.crew:
             if not member.is_active:
@@ -78,7 +81,7 @@ class SpaceMission(BaseModel):
 
 def json_plugin() -> list[Any] | None:
     try:
-        with open("../generated_data/space_missions.json") as dosya:
+        with open("generated_data/space_missions.json") as dosya:
             reader = json.load(dosya)
             data = random.choices(reader, k=3)
     except FileNotFoundError as e:
@@ -87,11 +90,10 @@ def json_plugin() -> list[Any] | None:
     else:
         return data
 
-
-if __name__ == "__main__":
+def main():
     data = json_plugin()
     if not data:
-        raise ValueError("Data found")
+        raise ValueError("Data not found")
 
     print("\nSpace Mission Crew Validation")
     print("==============================================\n")
@@ -129,3 +131,7 @@ if __name__ == "__main__":
             error = e.errors()
             print("Expected validation error:\n", error[0]['msg'])
         print("\n==============================================")
+
+
+if __name__ == "__main__":
+    main()
