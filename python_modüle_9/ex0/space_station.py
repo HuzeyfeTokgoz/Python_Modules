@@ -5,6 +5,7 @@ import csv
 import json
 from typing import Any
 
+
 class SpaceStation(BaseModel):
     station_id: str = Field(min_length=3, max_length=10)
     name: str = Field(min_length=1, max_length=50)

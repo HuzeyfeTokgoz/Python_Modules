@@ -55,7 +55,7 @@ class SpaceMission(BaseModel):
 
             if experienced < len(self.crew) / 2:
                 raise ValueError("Long missions (> 365 days) "
-                                "need 50% experienced crew (5+ years)")
+                                 "need 50% experienced crew (5+ years)")
 
         for member in self.crew:
             if not member.is_active:
@@ -79,18 +79,17 @@ class SpaceMission(BaseModel):
         ])
 
 
-def json_plugin() -> list[Any] | None:
+def json_plugin() -> list[dict[str, Any]]:
     try:
         with open("generated_data/space_missions.json") as dosya:
             reader = json.load(dosya)
             data = random.choices(reader, k=3)
     except FileNotFoundError as e:
         print(e)
-        return None
-    else:
-        return data
+    return data
 
-def main():
+
+def main() -> None:
     data = json_plugin()
     if not data:
         raise ValueError("Data not found")
