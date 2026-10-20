@@ -12,10 +12,10 @@ def coordinate() -> tuple[float, float, float]:
             print("Invalid syntax")
             continue
         try:
-            coor_tuple: tuple[float, float, float] = (0.0, 0.0, 0.0)
+            coor_tuple: tuple[float, ...] = ()
             for i in value:
-                new_coor_tuple = coor_tuple + (float(i),)
-            return (new_coor_tuple[0], new_coor_tuple[1], new_coor_tuple[2])
+                coor_tuple = coor_tuple + (float(i),)
+            return (coor_tuple[0], coor_tuple[1], coor_tuple[2])
         except ValueError as e:
             print(f"Error on parameter '{i}': {e}")
 
